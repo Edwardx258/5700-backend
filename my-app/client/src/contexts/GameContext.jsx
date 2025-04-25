@@ -179,7 +179,7 @@ function canPlaceShip(board, row, col, size, horizontal) {
             c < 0 ||
             r >= BOARD_SIZE ||
             c >= BOARD_SIZE ||
-            board[r][c] !== null
+            board[r][c] !== ""
         ) {
             return false;
         }

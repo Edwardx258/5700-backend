@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import "../styles/PageLayout.css";
+import { listScores } from "../api/api";
 
 function HighScoresPage() {
   const { user } = useContext(AuthContext);
@@ -8,21 +9,14 @@ function HighScoresPage() {
 
   // Simulate fetching scores and sorting
   useEffect(() => {
-    const mockScores = [
-      { name: "Player1", wins: 15, losses: 5 },
-      { name: "Player3", wins: 10, losses: 10 },
-      { name: "Player5", wins: 6, losses: 14 },
-      { name: "Player2", wins: 12, losses: 8 },
-      { name: "Player4", wins: 8, losses: 12 },
-    ];
-
-    // Sort by wins descending
-    const sorted = mockScores
-      .sort((a, b) => b.wins - a.wins)
-      .map((s, index) => ({ ...s, rank: index + 1 }));
-
-    setScores(sorted);
-  }, []);
+        listScores()
+          .then((data) => {
+              // data 是 [{ username, wins, losses }, …]
+                  //  wins ↓, losses ↑, username sort
+                      setScores(data.map((p, idx) => ({ ...p, rank: idx + 1 })));
+            })
+          .catch((err) => console.error("Failed to fetch high scores:", err));
+      }, []);
 
   return (
     <div className="scoreContainer">

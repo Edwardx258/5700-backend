@@ -5,11 +5,12 @@ import { AuthContext } from "../contexts/AuthContext";
 import "../styles/PageLayout.css";
 
 function LoginPage() {
-  const { login } = useContext(AuthContext);
+    const { login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
     const handleLogin = async (formData) => {
         try {
+            await logout();
             await login(formData);
             navigate("/games");
         } catch (err) {

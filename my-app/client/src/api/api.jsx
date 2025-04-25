@@ -28,24 +28,26 @@ export const fetchGame = async (gameId) => {
   return res.data;
 };
 
-export const createNewGame = async () => {
-  const res = await api.post("/games");
-  return res.data;
-};
+export async function createNewGame() {
+  const res = await axios.post("/games", {}, { withCredentials: true });
+  const id = res.data.id ?? res.data._id;
+  return { id };
+}
+export async function joinGame(gameId) {
+  const res = await axios.post(`/games/${gameId}/join`, {}, { withCredentials: true });
+  const id = res.data.id ?? res.data._id ?? gameId;
+  return { id };
+}
+export async function createAIGame() {
+  const res = await axios.post("/games/ai", {}, { withCredentials: true });
+  const id = res.data.id ?? res.data._id;
+  return { id };
+}
 
-export const createAIGame = async () => {
-  const res = await api.post("/games/ai");
-  return res.data;
-};
-
-export const joinGame = async (gameId) => {
-  const res = await api.post(`/games/${gameId}/join`);
-  return res.data;
-};
 
 export const updateBoard = async (gameId, board) => {
-  const res = await api.put(`/games/${gameId}/board`, { board });
-  return res.data;
+    const res = await api.put(`/games/${gameId}/board`, { board });
+   return res.data;
 };
 
 export const makeMove = async (gameId, { row, col }) => {
@@ -53,4 +55,18 @@ export const makeMove = async (gameId, { row, col }) => {
   return res.data;
 };
 
+export async function listGames() {
+  const res = await axios.get('/games', { withCredentials: true });
+  return {
+    openGames: res.data.open,
+    myOpen:    res.data.myOpen,
+    active:    res.data.active,
+    completed: res.data.completed,
+  };
+}
+
+export const listScores = async () => {
+  const res = await api.get("/scores");
+  return res.data;
+};
 export default api;

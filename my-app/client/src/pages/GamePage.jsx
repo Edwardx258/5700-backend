@@ -32,6 +32,25 @@ export default function GamePage() {
     load();
   }, [id, isLoggedIn, navigate]);
 
+  useEffect(() => {
+       if (loading || !game || game.status === "completed") return;
+       const interval = setInterval(async () => {
+           try {
+               const updated = await fetchGame(id);
+               // only change happen
+                   if (JSON.stringify(updated.boardState) !== JSON.stringify(game.boardState) ||
+                       updated.currentTurn !== game.currentTurn ||
+                       updated.status !== game.status) {
+                   setGame(updated);
+                 }
+             } catch (err) {
+               console.error("Polling failed:", err);
+             }
+         }, 3000); //per second
+
+           return () => clearInterval(interval);
+     }, [game, id, loading]);
+
   // Click opponent's cell
   const handleCellClick = async (r, c) => {
     if (!game || game.status !== "active") return;

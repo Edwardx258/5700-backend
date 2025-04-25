@@ -44,7 +44,7 @@ function App() {
           }
         />
         <Route
-          path="/place-ships"
+          path="/place-ships/:gameId"
           element={
             isLoggedIn ? <ShipPlacement /> : <Navigate to="/login" replace />
           }
