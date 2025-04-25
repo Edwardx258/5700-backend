@@ -3,35 +3,55 @@ import React from "react";
 import clsx from "clsx";
 
 export default function GameBoard({
-                                    boardData = [],
-                                    isOwnBoard = false,  // Show ships on own board only
-                                    isInteractive = false,
-                                    onCellClick,
+                                      boardData = [],
+                                      isOwnBoard = false,
+                                      isInteractive = false,
+                                      isPlacing = false,
+                                      onCellClick,
+                                      onShipDrop,
                                   }) {
-  return (
-      <div className="grid grid-cols-10 gap-1">
-        {boardData.map((row, r) =>
-            row.map((cell, c) => {
-              const isHit = cell === "H";
-              const isMiss = cell === "M";
-              const hasShip = cell === "S";
-              let cls = "w-8 h-8 border bg-blue-200";
+    return (
+        <div className="game-board-grid">
+            {boardData.map((row, r) =>
+                row.map((cell, c) => {
+                    const isHit = cell === "H";
+                    const isMiss = cell === "M";
+                    const hasShip = cell === "S";
 
-              if (isHit) cls += " bg-red-500";
-              else if (isMiss) cls += " bg-gray-300";
-              else if (hasShip && isOwnBoard) cls += " bg-green-400";
+                    let cls = "tile";
+                    if (isHit) cls += " bg-red-500";
+                    else if (isMiss) cls += " bg-gray-300";
+                    else if (hasShip && isOwnBoard) cls += " bg-green-400";
 
-              return (
-                  <div
-                      key={`${r}-${c}`}
-                      className={clsx(cls, isInteractive && "cursor-pointer")}
-                      onClick={() => isInteractive && onCellClick(r, c)}
-                  >
-                    {isHit ? "💥" : isMiss ? "⚪" : ""}
-                  </div>
-              );
-            })
-        )}
-      </div>
-  );
+                    return (
+                        <div
+                            key={`${r}-${c}`}
+                            className={clsx(cls, (isInteractive || isPlacing) && "cursor-pointer")}
+                            onClick={() => isInteractive && onCellClick && onCellClick(r, c)}
+                            onDragOver={isPlacing ? (e) => e.preventDefault() : undefined}
+                            onDrop={
+                                isPlacing
+                                    ? (e) => {
+                                        e.preventDefault();
+                                        const shipId = parseInt(e.dataTransfer.getData("shipId"), 10);
+                                        const shipSize = parseInt(e.dataTransfer.getData("shipSize"), 10);
+                                        const shipOrientation = e.dataTransfer.getData("shipOrientation");
+                                        const ship = { id: shipId, size: shipSize, orientation: shipOrientation };
+                                        if (onShipDrop) {
+                                            const success = onShipDrop(ship, r, c);
+                                            if (!success) {
+                                                alert("cannot place ship here, try another spot！");
+                                            }
+                                        }
+                                    }
+                                    : undefined
+                            }
+                        >
+                            {isHit ? "💥" : isMiss ? "⚪" : ""}
+                        </div>
+                    );
+                })
+            )}
+        </div>
+    );
 }

@@ -3,59 +3,80 @@ import { AuthContext } from "../contexts/AuthContext";
 import "../styles/PageLayout.css";
 
 function HighScoresPage() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);    // user: { id, username, … } 或 null
   const [scores, setScores] = useState([]);
 
-  // Simulate fetching scores and sorting
   useEffect(() => {
-    const mockScores = [
-      { name: "Player1", wins: 15, losses: 5 },
-      { name: "Player3", wins: 10, losses: 10 },
-      { name: "Player5", wins: 6, losses: 14 },
-      { name: "Player2", wins: 12, losses: 8 },
-      { name: "Player4", wins: 8, losses: 12 },
-    ];
+    async function loadScores() {
+      try {
+        const res = await fetch("/api/scores", {
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error("Failed to fetch scores");
+        let data = await res.json();
 
-    // Sort by wins descending
-    const sorted = mockScores
-      .sort((a, b) => b.wins - a.wins)
-      .map((s, index) => ({ ...s, rank: index + 1 }));
+        // wins ↓, losses ↑, username ↑
+        data.sort((a, b) => {
+          if (b.wins !== a.wins) return b.wins - a.wins;
+          if (a.losses !== b.losses) return a.losses - b.losses;
+          return a.username.localeCompare(b.username);
+        });
 
-    setScores(sorted);
+        data = data.map((p, i) => ({
+          _id: p._id,
+          username: p.username,
+          wins: p.wins,
+          losses: p.losses,
+          rank: i + 1,
+        }));
+
+        setScores(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    loadScores();
   }, []);
 
   return (
-    <div className="scoreContainer">
-      <h2 className="scoreTitle">High Scores</h2>
-      <div className="scoreTableWrapper">
-        <table className="scoreTable">
-          <thead>
+      <div className="scoreContainer">
+        <h2 className="scoreTitle">High Scores</h2>
+        <div className="scoreTableWrapper">
+          <table className="scoreTable">
+            <thead>
             <tr>
               <th>Rank</th>
               <th>Username</th>
               <th>Wins</th>
               <th>Losses</th>
             </tr>
-          </thead>
-          <tbody>
-            {scores.map((player) => (
-              <tr
-                key={player.rank}
-                className={
-                  user?.username === player.name ? "highlightRow" : ""
-                }
-              >
-                <td>{player.rank}</td>
-                <td>{player.name}</td>
-                <td>{player.wins}</td>
-                <td>{player.losses}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+            {scores.map((player) => {
+              const isCurrent = user?.username === player.username;
+              return (
+                  <tr
+                      key={player._id}
+                      className={isCurrent ? "highlightRow" : ""}
+                  >
+                    <td>{player.rank}</td>
+                    <td>
+                      {isCurrent ? (
+                          <strong>{player.username}</strong>
+                      ) : (
+                          player.username
+                      )}
+                    </td>
+                    <td>{player.wins}</td>
+                    <td>{player.losses}</td>
+                  </tr>
+              );
+            })}
+            </tbody>
+          </table>
+        </div>
+        <footer className="scoreFooter">&copy; 2025 Battleship Game</footer>
       </div>
-      <footer className="scoreFooter">&copy; 2025 Battleship Game</footer>
-    </div>
   );
 }
 

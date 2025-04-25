@@ -1,4 +1,4 @@
-/**HomePage**/
+/** 页面主容器 **/
 .pageContainer {
   display: flex;
   flex-direction: column;
@@ -14,6 +14,14 @@
 .pageHeader {
   max-width: 900px;
   margin: 0 auto;
+}
+
+.pageFooter {
+  text-align: center;
+  margin-top: 40px;
+  color: #777;
+  padding-bottom: 20px;
+  font-size: 1.1rem;
 }
 
 .pageImage {
@@ -47,229 +55,16 @@
   transform: scale(1.07);
 }
 
-.pageFooter {
-  text-align: center;
-  margin-top: 40px;
-  color: #777;
-  padding-bottom: 20px;
-  font-size: 1.1rem;
+.authFormWrapper {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-/**LoginPage**/
-.authFormWrapper {
-    width: 100%;
-    max-width: 450px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-
-  
-/**HighScoresPage**/
-.scoreContainer {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #2d3748;
-    color: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-  }
-  
-  .scoreTitle {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  
-  .scoreTableWrapper {
-    overflow-x: auto;
-  }
-  
-  .scoreTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  th,
-  td {
-    padding: 12px 16px;
-    text-align: center;
-    border-bottom: 1px solid #4a5568;
-  }
-  
-  th {
-    background-color: #1a202c;
-    font-weight: bold;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #4a5568;
-  }
-  
-  tr:hover {
-    background-color: #718096;
-  }
-  
-  .highlightRow {
-    background-color: #f6e05e !important;
-    color: black;
-    font-weight: bold;
-  }
-  
-  .scoreFooter {
-    margin-top: 2rem;
-    text-align: center;
-    color: #a0aec0;
-    font-size: 0.9rem;
-  }
-
-  /**Navbar**/
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 55px;
-    background: linear-gradient(to right, #1a202c, #2b6cb0);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-  }
-  
-  .navbarInner {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1rem;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    white-space: nowrap;
-  }
-  
-  .navLinks {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    gap: 1.2rem;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navLinks li {
-    display: inline;
-  }
-  
-  .navLinks a,
-  .navLinks button {
-    color: white;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    cursor: pointer;
-  }
-  
-  .navLinks a:hover,
-  .navLinks button:hover,
-  .navLinks .active {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  @media (max-width: 768px) {
-    .navbarInner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .navLinks {
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-  
-    .navLinks a,
-    .navLinks button {
-      width: 100%;
-      text-align: center;
-    }
-  }
-
-  /**ShipPlacement**/
-  .shipPlacementContainer {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .shipList {
-    width: 200px;
-    padding: 10px;
-    background-color: #e2e8f0;
-    border-radius: 8px;
-    text-align: left;
-  }
-  
-  .shipItem {
-    margin-bottom: 10px;
-    cursor: grab;
-    user-select: none;
-  }
-  
-  .shipSquare {
-    width: 20px;
-    height: 20px;
-    background-color: #3182ce;
-    margin: 2px;
-    border-radius: 4px;
-  }
-  
-  .shipPlaced {
-    background-color: #3182ce !important;
-  }
-  
-  .tile {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    font-size: 1.5rem;
-    background-color: white;
-    transition: background-color 0.3s;
-  }
-  
-  .board {
-    display: grid;
-    grid-template-columns: repeat(10, 40px);
-    gap: 5px;
-    margin-top: 10px;
-    background-color: #add8e6;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  /**Shared Auth Form Input Layout**/
 .formField {
   display: flex;
   flex-direction: column;
@@ -288,4 +83,200 @@
   border-radius: 6px;
   font-size: 1rem;
 }
-  
+
+.scoreContainer {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #2d3748;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.scoreTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.scoreTableWrapper {
+  overflow-x: auto;
+}
+
+.scoreTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #4a5568;
+}
+
+th {
+  background-color: #1a202c;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #4a5568;
+}
+
+tr:hover {
+  background-color: #718096;
+}
+
+.highlightRow {
+  background-color: #f6e05e !important;
+  color: black;
+  font-weight: bold;
+}
+
+.scoreFooter {
+  margin-top: 2rem;
+  text-align: center;
+  color: #a0aec0;
+  font-size: 0.9rem;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55px;
+  background: linear-gradient(to right, #1a202c, #2b6cb0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.navbarInner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks li {
+  display: inline;
+}
+
+.navLinks a,
+.navLinks button {
+  color: white;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.navLinks a:hover,
+.navLinks button:hover,
+.navLinks .active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .navbarInner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .navLinks a,
+  .navLinks button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.shipPlacementContainer {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.shipList {
+  width: 200px;
+  padding: 10px;
+  background-color: #e2e8f0;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.shipItem {
+  margin-bottom: 12px;
+  cursor: grab;
+  user-select: none;
+  display: flex;
+}
+
+.shipSquare {
+  width: 32px;
+  height: 32px;
+  background-color: #64748b;
+  margin: 2px;
+  border-radius: 4px;
+}
+
+.game-board-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  gap: 5px;
+}
+
+.tile {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  font-size: 1.5rem;
+  background-color: white;
+  transition: background-color 0.3s;
+}
+
+.bg-green-400 {
+  background-color: #68d391 !important;
+}
